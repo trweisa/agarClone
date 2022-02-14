@@ -82,7 +82,10 @@ io.sockets.on('connect',(socket)=>{
             }
             
             io.sockets.emit('updateLeaderBoard',getLeaderBoard());
-            io.sockets.emit('orbSwitch',orbData);
+            io.sockets.emit('orbSwitch',{
+                orbData,
+                playerScore: player.playerData.score
+            });
         }).catch(()=>{})
 
         let playerDeath = checkForPlayerCollisions(player.playerData,player.playerConfig,players,player.socketId)
