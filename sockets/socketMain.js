@@ -10,12 +10,12 @@ const Orb = require('./classes/Orb');
 let orbs = [];
 let players = [];
 let settings = {
-    defaultOrbs: 50,
-    defaultSpeed: 6,
+    defaultOrbs: 1000,
+    defaultSpeed: 1.3,
     defaultSize: 6,
     defaultZoom: 1.5,
-    worldWidth: 500,
-    worldHeight: 500
+    worldWidth: 5000,
+    worldHeight: 5000
 };
 
 initGame();
