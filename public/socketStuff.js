@@ -25,7 +25,9 @@ socket.on('tock',(data)=>{
 });
 
 socket.on('orbSwitch',(data)=>{
-    orbs.splice(data.orbIndex,1,data.newOrb);
+    orbs.splice(data.orbData.orbIndex, 1, data.orbData.newOrb);
+    document.querySelector('.player-score').innerHTML = "";
+    document.querySelector(".player-score").innerHTML = data.playerScore;
 });
 
 socket.on('tickTock',(data)=>{
