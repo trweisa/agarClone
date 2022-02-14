@@ -15,7 +15,6 @@ $(window).load(()=>{
 
 $('.name-form').submit((event)=>{
     event.preventDefault();
-    // console.log("Submitted!")
     player.name = document.querySelector('#name-input').value;
     $('#loginModal').modal('hide');
     $('#spawnModal').modal('show');
@@ -26,4 +25,23 @@ $('.start-game').click((event)=>{
     $('.modal').modal('hide');
     $('.hiddenOnStart').removeAttr('hidden');
     init();
+});
+
+$('.start-team-game').click((event)=>{
+    player.teamName = document.querySelector('#team-name-input').value;
+    if(player.teamName == "")
+    {
+        document.querySelector('.team-name-warning').innerHTML = `
+            Please enter a team name.
+        `;
+    }
+    else {
+        $('.modal').modal('hide');
+        $('.hiddenOnStart').removeAttr('hidden');
+        $('.team-score-board').removeAttr('hidden');
+
+        init();
+    }
+
+    //WILL WANT A TEAM SCORE DIV
 });

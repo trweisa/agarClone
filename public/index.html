@@ -23,6 +23,14 @@
 					</ol>
 					<hr>
 				</div>
+				<div id="team-leader-board" class="team-score-board" hidden>
+					<h3 class="text-center">Team Leader</h3>
+					<hr>
+					<ol class="team-leader-board">
+						<li class="leaderboard-team"></li>
+					</ol>
+					<hr>
+				</div>
 			</div>
 			<div id="game-message-wrapper">
 				<div id="game-message">{{gameMessage}}</div>
@@ -33,7 +41,7 @@
 
 <!-- Modals -->
 	<!-- LOGIN MODAL -->
-	<div id="loginModal" class="modal fade" role="dialog">
+	<div id="loginModal" class="modal fade" data-backdrop="static" role="dialog">
 		<div class="modal-dialog modal-sm">
 
 		<!-- Modal content-->
@@ -66,7 +74,7 @@
 	</div>
 
 <!-- START MODAL -->
-	<div id="spawnModal" class="modal fade" role="dialog">
+	<div id="spawnModal" class="modal fade" data-backdrop="static" role="dialog">
 		<div class="modal-dialog modal-sm">
 
 		<!-- Modal content-->
@@ -78,8 +86,16 @@
 				<div class="modal-body">
 					<h3 class="text-center">Hello, <span class="player-name"></span>!</h3>
 					<div class="play-btn-wrapper">
-						<button id="join-team-btn" type="button" class="btn play-button">Join a Team!</button>
 						<button id="play-solo-btn" type="button" class="btn play-button start-game">Play Solo!</button>
+					</div>
+					<div class="team-btn-wrapper">
+						<form class="team-name-form">
+							<div class="text-center error-message"></div>
+							<button id="join-team-btn" type="button" class="btn play-button start-team-game">Join a Team!</button>
+							<input id="team-name-input" class="text-input text-center form-control" type="text" name="team-name-input" placeholder="Enter your team name here" required>
+						</form>
+					</div>
+					<div class="team-name-warning">
 					</div>
 					<div class="stats-wrapper">
 					</div>

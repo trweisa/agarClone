@@ -1,9 +1,10 @@
 const uuidv4 = require('uuid/v4');
 
 class PlayerData{
-    constructor(playerName,settings){
+    constructor(playerName,settings, teamName = ""){
         this.uid = uuidv4();
         this.name = playerName;
+        this.teamName = teamName;
         this.locX = Math.floor(settings.worldWidth*Math.random() + 100);
         this.locY = Math.floor(settings.worldHeight*Math.random() + 100);
         this.radius = settings.defaultSize;
@@ -19,4 +20,4 @@ class PlayerData{
     }    
 }
 
-module.exports = PlayerData
+module.exports = PlayerData;

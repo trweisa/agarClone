@@ -228,4 +228,6 @@ canvas{
 	opacity: 0;
 }
 
-
+.team-name-warning{
+	color:#e60000;
+}

@@ -1,7 +1,8 @@
 const Orb = require('./classes/Orb')
 const io = require('../servers').io;
 
-function checkForOrbCollisions(pData,pConfig, orbs, settings){
+function checkForOrbCollisions(pData,pConfig, orbs, settings, teams){
+    var index = teams.map(function(e) { return e.teamName; }).indexOf(pData.teamName);
     return new Promise((resolve, reject)=>{
         orbs.forEach((orb,i)=>{
         // AABB Test(square)  - Axis-aligned bounding boxes
@@ -18,6 +19,11 @@ function checkForOrbCollisions(pData,pConfig, orbs, settings){
                     //COLLISION!!!
                     pData.score += 1;
                     pData.orbsAbsorbed += 1;
+
+                    if(pData.teamName != "")
+                    {
+                        teams[index].score += 1;
+                    }
 
                     if(pConfig.zoom > 1){
                         pConfig.zoom -= .001;
@@ -40,10 +46,10 @@ function checkForOrbCollisions(pData,pConfig, orbs, settings){
     });
 }
         
-function checkForPlayerCollisions(pData,pConfig,players,playerId){
+function checkForPlayerCollisions(pData, pConfig, players, playerId, teams){
     return new Promise((resolve, reject)=>{	
         players.forEach((curPlayer,i)=>{
-            if(curPlayer.uid != playerId){
+            if(curPlayer.uid != playerId && (curPlayer.teamName != pData.teamName || pData.teamName == "")){
                 let pLocx = curPlayer.locX
                 let pLocy = curPlayer.locY
                 let pR = curPlayer.radius
@@ -62,7 +68,7 @@ function checkForPlayerCollisions(pData,pConfig,players,playerId){
                     if(distance < pData.radius + pR){
                         if(pData.radius > pR){
                             // Enemy death
-                            let collisionData = updateScores(pData,curPlayer);
+                            let collisionData = updateScores(pData, curPlayer, teams);
                             if(pConfig.zoom > 1){
                                 pConfig.zoom -= (pR * 0.25) * .001;
                             }
@@ -78,11 +84,30 @@ function checkForPlayerCollisions(pData,pConfig,players,playerId){
     });
 }
 
-function updateScores(killer, killed){
+function updateScores(killer, killed, teams){
     killer.score += (killed.score + 10);
     killer.playersAbsorbed += 1;
     killed.alive = false;
     killer.radius += (killed.radius * 0.25)
+
+    if(killer.teamName != "")
+    {
+        var killerTeamIndex = teams.map(function(e) { return e.teamName; }).indexOf(killer.teamName);
+        teams[killerTeamIndex].score += killed.score + 10;
+    }
+    if(killed.teamName != "")
+    {
+        var killedTeamIndex = teams.map(function(e) { return e.teamName; }).indexOf(killed.teamName);
+
+        teams[killedTeamIndex].score -= killed.score;
+        teams[killedTeamIndex].numberOfMembers--;
+        
+        if(teams[killedTeamIndex].numberOfMembers < 1)
+        {
+            teams.splice(killedTeamIndex, 1);
+        }
+    }
+
     return{
         died: killed,
         killedBy: killer,
